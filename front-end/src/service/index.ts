@@ -38,10 +38,10 @@ export default class Service implements IService {
   post<T>(data: T) {
     return conectApi.post(`${this.url}`, data);
   }
-  put<T>(id: string, data: T) {
+  put<T>(id: number, data: T) {
     return conectApi.put(`${this.url}/${id}`, data);
   }
-  delete<T>(id: string) {
+  delete<T>(id: number) {
     return conectApi.delete(`${this.url}/${id}`);
   }
 }

@@ -19,13 +19,15 @@ namespace API.Services
         private readonly IUserRepository usersRepository;
         private readonly IFunctionalCharacteristicByRoleRepository functionalCharacteristicByRoleRepository;
         private readonly IFunctionalCharacteristicRepository functionalCharacteristicRepository;
+        private readonly IValueEncript valueEncript;
         private readonly IOptions<ApiConfig> apiConfig;
-        public SecurityService(IUserRepository _usersRepository, IFunctionalCharacteristicByRoleRepository _functionalCharacteristicByRoleRepository, IFunctionalCharacteristicRepository _functionalCharacteristicRepository, IOptions<ApiConfig> _apiConfig)
+        public SecurityService(IUserRepository _usersRepository, IFunctionalCharacteristicByRoleRepository _functionalCharacteristicByRoleRepository, IFunctionalCharacteristicRepository _functionalCharacteristicRepository,IValueEncript _valueEncript, IOptions<ApiConfig> _apiConfig)
         {
             usersRepository = _usersRepository;
             apiConfig = _apiConfig;
             functionalCharacteristicByRoleRepository = _functionalCharacteristicByRoleRepository;
             functionalCharacteristicRepository = _functionalCharacteristicRepository;
+            valueEncript = _valueEncript;
         }
         public async Task<IActionResult> Login(AuthInput authInput)
         {
@@ -42,7 +44,8 @@ namespace API.Services
                     return new UnauthorizedObjectResult(new ResultError() { Type = "No autorizado", Message = "Usuario / Clave incorrectos" });
                 }
                 //se delega la responsabilidad del hashing al frontEnd
-                if (user.Password != authInput.Password)
+                string password = valueEncript.Sha(valueEncript.Desencrypt(authInput.Password));
+                if (user.Password != password)
                 {
                     return new UnauthorizedObjectResult(new ResultError() { Type = "No autorizado", Message = "Usuario / Clave incorrectos" });
                 }
@@ -50,7 +53,7 @@ namespace API.Services
 
                 #region TokenCreation
 
-                int permissions = await GetPermissionsKey(user.RoleId);
+                string permissions = await GetPermissionsKey(user.RoleId);
                 // authentication successful so generate jwt token
                 var tokenHandler = new JwtSecurityTokenHandler();
                 var key = Encoding.ASCII.GetBytes(apiConfig.Value.Secret);
@@ -59,7 +62,8 @@ namespace API.Services
                                         new Claim(ClaimTypes.Name, user.UserName),
                                         new Claim(ClaimTypes.Email,user.Email),
                                         new Claim("userId",user.Id.ToString()),
-                                        new Claim("permissions",permissions.ToString())
+                                        new Claim("permissions",permissions),
+                                        new Claim("fullName",user.FullName)
                                 };
 
 
@@ -69,7 +73,7 @@ namespace API.Services
                 var tokenDescriptor = new SecurityTokenDescriptor
                 {
                     Subject = new ClaimsIdentity(claims),
-                    Expires = DateTime.UtcNow.AddHours(apiConfig.Value.ExpirationHoursCredentials),
+                    Expires = DateTime.UtcNow.AddMinutes(apiConfig.Value.ExpirationMinutesCredentials),
                     SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
                 };
                 var token = tokenHandler.CreateToken(tokenDescriptor);
@@ -111,12 +115,12 @@ namespace API.Services
 
         }
 
-        public async Task<int> GetPermissionsKey(int roleId)
+        public async Task<string> GetPermissionsKey(int roleId)
         {
             List<PermissionInfo> permissions = await GetPermissionsList(roleId);
             string binary = string.Join("", permissions.Select(x => Convert.ToInt32(x.Granted)).ToList());
-            int numberBinaryPermmission = Convert.ToInt32(binary, 2);
-            return numberBinaryPermmission;
+
+            return binary;
         }
     }
 }

@@ -9,6 +9,6 @@ namespace API.Data.Models
     {
         public string Secret { get; set; }
         public string Secret2 { get; set; }
-        public int ExpirationHoursCredentials { get; set; }
+        public int ExpirationMinutesCredentials { get; set; }
     }
 }

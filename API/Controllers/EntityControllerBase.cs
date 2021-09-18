@@ -114,6 +114,11 @@ namespace API.Controllers
                 Expression left = pe;
                 var member = filter.NameColumn;
 
+                if (filter.NameColumn == "role")
+                {
+                    member = "Role.Name";
+                }
+
                 foreach (var nestedMember in member.Split("."))
                 {
                     left = MemberExpression.Property(left, nestedMember);

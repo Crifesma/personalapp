@@ -12,7 +12,8 @@
                       | Ingresa con su cuenta de google.
                     v-form
                       v-text-field(v-model='authInput.userName' light prepend-icon='mdi-account' label='Usuario' type='text' dark)
-                      v-text-field(v-model='authInput.password' light prepend-icon='mdi-lock' label='Password' type='password' dark)
+                      v-text-field(v-model='authInput.password' light
+                      :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'" prepend-icon='mdi-lock' label='Password' :type="show1 ? 'text' : 'password'" @click:append="show1 = !show1" dark)
                     div
                       v-btn(@click="login" dark).mr-1 ingresar
           v-snackbar(v-model="openMessage" :color="errorMessage?'error':'success'")
@@ -28,7 +29,8 @@ import { AuthInput } from "@/data/models/AuthInput";
     inputFilter: () => import("@/components/inputFilter.vue")
   }
 })
-export default class Producto extends Vue {
+export default class Login extends Vue {
+  private show1 = false;
   private authInput: AuthInput = { userName: "", password: "" };
   private message = "";
   private openMessage = false;
@@ -42,10 +44,13 @@ export default class Producto extends Vue {
     try {
       let response = await this.securityRepository.login(this.authInput);
       this.message = "Usuario identificado";
+
+      this.$router.push({ name: "home" });
     } catch (err) {
       this.errorMessage = true;
-      console.log(err);
-      this.message = err.data.type + ": " + err.data.message;
+      console.log({ err }, err.response);
+      if (err.data != undefined) this.message = err.data.type + ": " + err.data.message;
+      else this.message = err.message == "Network Error" ? "Error de red" : " Error desconocido";
     }
 
     this.openMessage = true;

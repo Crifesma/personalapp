@@ -55,14 +55,14 @@ export default abstract class Repository<TIEntity> implements IRepository<TIEnti
     return model;
   }
 
-  public async update(id: string, data: TIEntity) {
+  public async update(id: number, data: TIEntity) {
     this.service.setEndPoint(this.endPoint());
     const httpResponse = await this.service.put(id, data);
     const model = httpResponse.data;
     return true;
   }
 
-  public async delete(id: string) {
+  public async delete(id: number) {
     this.service.setEndPoint(this.endPoint());
     console.log(id);
     const httpResponse = await this.service.delete(id);

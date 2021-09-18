@@ -1,12 +1,11 @@
 <template lang="pug">
   div
-    h1 Bienvenido
-    p ArandaSof soluciones a medida integradas con nuestros sistemas
+    h1 Roles
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 
 @Component({})
-export default class Home extends Vue {}
+export default class Roles extends Vue {}
 </script>

@@ -1,4 +1,5 @@
 ﻿using API.Data.Models;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -11,8 +12,8 @@ namespace API.Services
 {
     public class ValueEncript : IValueEncript
     {
-        private readonly ApiConfig apiConfig;
-        public ValueEncript(ApiConfig _apiConfig)
+        private readonly IOptions<ApiConfig> apiConfig;
+        public ValueEncript(IOptions<ApiConfig> _apiConfig)
         {
             apiConfig = _apiConfig;
         }
@@ -24,7 +25,7 @@ namespace API.Services
                 var salt = cipherBytes.Take(16).ToArray();
                 var iv = cipherBytes.Skip(16).Take(16).ToArray();
                 var encrypted = cipherBytes.Skip(32).ToArray();
-                Rfc2898DeriveBytes pdb = new Rfc2898DeriveBytes(apiConfig.Secret2, salt, 100);
+                Rfc2898DeriveBytes pdb = new Rfc2898DeriveBytes(apiConfig.Value.Secret2, salt, 100);
                 encryptor.Key = pdb.GetBytes(32);
                 encryptor.Padding = PaddingMode.PKCS7;
                 encryptor.Mode = CipherMode.CBC;
@@ -49,7 +50,7 @@ namespace API.Services
 
             using (Aes aes = Aes.Create())
             {
-                aes.Key = Encoding.UTF8.GetBytes(apiConfig.Secret2);
+                aes.Key = Encoding.UTF8.GetBytes(apiConfig.Value.Secret2);
                 aes.IV = iv;
                 aes.Padding = PaddingMode.PKCS7;
                 aes.Mode = CipherMode.CBC;

@@ -19,34 +19,34 @@ namespace API.Services
         {
             repository = _repository;
         }
-        public Task<T> Add(T entity)
+        public virtual Task<T> Add(T entity)
         {
             return repository.Add(entity);
         }
 
-        public Task<T> Delete(int id)
+        public virtual Task<T> Delete(int id)
         {
             return repository.Delete(id);
         }
 
-        public Task<T> Get(int id, string includeProperties = "")
+        public virtual Task<T> Get(int id, string includeProperties = "")
         {
             return repository.Delete(id);
         }
 
 
-        public Task<QueryResult<T>> Get(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string includeProperties = "", int pageSize = 10, int pageIndex = 0)
+        public virtual Task<QueryResult<T>> Get(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string includeProperties = "", int pageSize = 10, int pageIndex = 0)
         {
             return repository.Get(filter, orderBy, includeProperties, pageSize, pageIndex);
 
         }
 
-        public Task<List<T>> GetAll()
+        public virtual Task<List<T>> GetAll()
         {
             return repository.GetAll();
         }
 
-        public Task<T> Update(T entity)
+        public virtual Task<T> Update(T entity)
         {
             return repository.Update(entity);
         }

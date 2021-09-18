@@ -56,13 +56,13 @@ namespace API.Data
                 }
             }
 
-            return await query.FirstOrDefaultAsync();
+            return await query.AsNoTracking().FirstOrDefaultAsync();
 
         }
 
         public async Task<List<TEntity>> GetAll()
         {
-            return await context.Set<TEntity>().ToListAsync();
+            return await context.Set<TEntity>().AsNoTracking().ToListAsync();
         }
 
         public virtual async Task<TEntity> Update(TEntity entity)
@@ -100,11 +100,11 @@ namespace API.Data
 
             if (orderBy != null)
             {
-                result = orderBy(query).ToList();
+                result = orderBy(query).AsNoTracking().ToList();
             }
             else
             {
-                result = await query.ToListAsync();
+                result = await query.AsNoTracking().ToListAsync();
             }
 
             pagedResult.TotalRecords = result.Count();

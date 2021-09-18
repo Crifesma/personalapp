@@ -53,6 +53,7 @@ namespace API
             services.AddTransient<IRoleService, RoleService>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<ISecurityService, SecurityService>();
+            services.AddTransient<IValueEncript, ValueEncript>();
 
             services.AddSwaggerGen(c =>
             {
@@ -109,7 +110,7 @@ namespace API
             app.UseAuthorization();
 
             app.UseCors(x => x
-                 .WithOrigins("http://localhost:8080", "http://localhost:8081")
+                 .WithOrigins("http://localhost:8080", "http://localhost:8081", "http://192.168.1.11:8080", "http://192.168.1.11:8081")
                  .AllowAnyHeader()
                  .AllowAnyMethod()
                  .AllowAnyOrigin()

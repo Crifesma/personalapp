@@ -35,7 +35,7 @@ namespace API.Data
 
             User[] users = new User[]
             {
-                new User{UserName="admon",FullName="Administrador del Sistema",Age=99,Address="Company",Phone="55555",Email="admin@company.com",RoleId=1},
+                new User{UserName="admon",Password="a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3",FullName="Administrador del Sistema",Age=99,Address="Company",Phone="55555",Email="admin@company.com",RoleId=1},
             };
 
             foreach (User a in users)
@@ -88,6 +88,31 @@ namespace API.Data
                     RoleId=1,
                     FunctionalCharacteristicId=5
                 },
+                  new FunctionalCharacteristicByRole{
+                    PublicationDate=DateTime.Now,
+                    RoleId=2,
+                    FunctionalCharacteristicId=3
+                },
+                   new FunctionalCharacteristicByRole{
+                    PublicationDate=DateTime.Now,
+                    RoleId=2,
+                    FunctionalCharacteristicId=4
+                },
+                    new FunctionalCharacteristicByRole{
+                    PublicationDate=DateTime.Now,
+                    RoleId=2,
+                    FunctionalCharacteristicId=5
+                },
+                   new FunctionalCharacteristicByRole{
+                    PublicationDate=DateTime.Now,
+                    RoleId=3,
+                    FunctionalCharacteristicId=4
+                },
+                    new FunctionalCharacteristicByRole{
+                    PublicationDate=DateTime.Now,
+                    RoleId=3,
+                    FunctionalCharacteristicId=5
+                }
             };
 
             foreach (FunctionalCharacteristicByRole fcRol in functionalCharacteristicByRoles)

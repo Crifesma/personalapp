@@ -6,26 +6,59 @@ Vue.use(VueRouter);
 
 const routes: Array<RouteConfig> = [
   {
-    path: "/",
-    name: "h",
-    component: () => import(/* webpackChunkName: 'about' */ "../App.vue"),
-    beforeEnter: Authenticate,
-    redirect: to => {
-      return "/index";
+    path: "/app",
+    name: "app",
+    component: () => import(/* webpackChunkName: 'about' */ "../views/Main.vue"),
+    //beforeEnter: Authenticate,
+    redirect: () => {
+      return "/app/home";
     },
 
     children: [
       {
-        path: "/home",
+        path: "/app/home",
         name: "home",
         component: () => import(/* webpackChunkName: 'about' */ "../views/Home.vue")
+        //beforeEnter: Authenticate
+      },
+      {
+        path: "/app/permissions",
+        name: "permissions",
+        component: () => import(/* webpackChunkName: 'about' */ "../views/Permissions.vue")
+        //beforeEnter: Authenticate
+      },
+      {
+        path: "/app/roles",
+        name: "roles",
+        component: () => import(/* webpackChunkName: 'about' */ "../views/Roles.vue")
+        //beforeEnter: Authenticate
+      },
+      {
+        path: "/app/users",
+        name: "users",
+        component: () => import(/* webpackChunkName: 'about' */ "../views/Users.vue")
       }
-    ]
+    ],
+    meta: { requiresAuth: true }
   },
   {
     path: "/index",
     name: "index",
     component: () => import(/* webpackChunkName: 'about' */ "../views/Login.vue")
+  },
+  {
+    path: "/",
+    name: "main",
+    component: () => import(/* webpackChunkName: 'about' */ "../App.vue"),
+    redirect: () => {
+      return "/index";
+    }
+  },
+  {
+    path: "*",
+    redirect: () => {
+      return "/app";
+    }
   }
 ];
 
@@ -34,5 +67,7 @@ const router = new VueRouter({
   base: process.env.VUE_APP_BASE_URL,
   routes
 });
+
+router.beforeEach(Authenticate);
 
 export default router;

@@ -7,7 +7,7 @@
 		//- 				v-icon(v-on="on") mdi-magnify
 		v-dialog#filter-modal(transition="dialog-bottom-transition" v-model='dialogFilter'   max-width="600")
 			template(v-slot:activator='{ on }')
-				v-btn(color='primary' dark class="mb-2 text-capitalize" v-on='on')
+				v-btn(color='primary' dark class="mb-2 text-capitalize" v-on='on' :disabled="disabled")
 					v-icon mdi-magnify
 					| Filtrar
 			template( v-slot:default="dialog")
@@ -44,6 +44,11 @@ export default class inputFilter extends Vue {
     type: String
   })
   readonly nameModuleStore!: string;
+
+  @Prop({
+    type: Boolean
+  })
+  readonly disabled!: boolean;
 
   @Prop({
     type: Array

@@ -1,9 +1,9 @@
 import { Role } from "../entities/Role";
 import Repository from "../Repository";
 
-export default class TestRepository extends Repository<Role> {
+export default class RoleRepository extends Repository<Role> {
   constructor() {
     super("Role");
-    console.log("construidad, testrepository");
+    console.log("construidad, Rolerepository");
   }
 }
