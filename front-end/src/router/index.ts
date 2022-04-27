@@ -8,8 +8,7 @@ const routes: Array<RouteConfig> = [
   {
     path: "/app",
     name: "app",
-    component: () => import(/* webpackChunkName: 'about' */ "../views/Main.vue"),
-    //beforeEnter: Authenticate,
+    component: () => import("../views/Main.vue"),
     redirect: () => {
       return "/app/home";
     },
@@ -18,25 +17,22 @@ const routes: Array<RouteConfig> = [
       {
         path: "/app/home",
         name: "home",
-        component: () => import(/* webpackChunkName: 'about' */ "../views/Home.vue")
-        //beforeEnter: Authenticate
+        component: () => import("../views/Home.vue")
       },
       {
         path: "/app/permissions",
         name: "permissions",
-        component: () => import(/* webpackChunkName: 'about' */ "../views/Permissions.vue")
-        //beforeEnter: Authenticate
+        component: () => import("../views/Permissions.vue")
       },
       {
         path: "/app/roles",
         name: "roles",
-        component: () => import(/* webpackChunkName: 'about' */ "../views/Roles.vue")
-        //beforeEnter: Authenticate
+        component: () => import("../views/Roles.vue")
       },
       {
         path: "/app/users",
         name: "users",
-        component: () => import(/* webpackChunkName: 'about' */ "../views/Users.vue")
+        component: () => import("../views/Users.vue")
       }
     ],
     meta: { requiresAuth: true }
@@ -44,12 +40,12 @@ const routes: Array<RouteConfig> = [
   {
     path: "/index",
     name: "index",
-    component: () => import(/* webpackChunkName: 'about' */ "../views/Login.vue")
+    component: () => import("../views/Login.vue")
   },
   {
     path: "/",
     name: "main",
-    component: () => import(/* webpackChunkName: 'about' */ "../App.vue"),
+    component: () => import("../App.vue"),
     redirect: () => {
       return "/index";
     }

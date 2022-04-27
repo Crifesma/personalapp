@@ -9,7 +9,7 @@ export default class SecurityRepository extends Repository<any> {
     super("Security");
   }
 
-  public async login(data: AuthInput) {
+  public async login(data: AuthInput): Promise<any> {
     const dataForsend: AuthInput = { userName: "", password: "" };
     Object.assign(dataForsend, data);
     this.service.setEndPoint(this.endPoint() + "/login");

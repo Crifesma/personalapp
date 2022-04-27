@@ -1,5 +1,5 @@
 <template lang="pug">
-  v-app(dark)
+  v-app
     v-navigation-drawer(v-model="drawer" :mini-variant="miniVariant" :clipped="clipped" fixed app)
       v-list
         v-list-item(v-for="(item, i) in items" :key="i" :to="item.to" router exact :disabled="!item.enabled")
@@ -13,8 +13,8 @@
         v-icon mdi-{{ `chevron-${miniVariant ? 'right' : 'left'}` }}
       v-btn(icon @click.stop="clipped = !clipped")
         v-icon mdi-application
-      v-btn(icon @click.stop="fixed = !fixed")
-        v-icon mdi-minus
+      //- v-btn(icon @click.stop="fixed = !fixed")
+      //-   v-icon mdi-minus
       v-toolbar-title(v-text="title")
       v-spacer
       | {{fullName}}
@@ -23,16 +23,11 @@
           v-btn(icon v-bind="attrs" v-on="on")
             v-icon mdi-account-circle
         v-list
-          //- v-list-item(link)
-          //-     v-list-item-action
-          //-       v-icon mdi-login
-          //-     v-list-item-content(@click="login")
-          //-       v-list-item-title Iniciar sesión
           v-list-item(link)
             v-list-item-action
               v-icon mdi-logout
             v-list-item-content(@click="logout")
-              v-list-item-title Cerrar sesión
+              v-list-item-title Logout
     v-main
       v-container
         router-view
@@ -59,7 +54,7 @@ export default class App extends Vue {
   items: Array<MenuLayoutItem> = [
     {
       icon: "mdi-apps",
-      title: "Inicio",
+      title: "Home",
       to: "/app/home",
       enabled: true
     },
@@ -76,8 +71,8 @@ export default class App extends Vue {
     //enabled: true
     // },
     {
-      icon: "",
-      title: "Ususarios",
+      icon: "mdi-account-details",
+      title: "Users",
       to: "/app/users",
       enabled: true
     }

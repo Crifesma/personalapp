@@ -1,7 +1,7 @@
 <template lang="pug">
   div
-    h1 Bienvenido
-    p ArandaSof soluciones a medida integradas con nuestros sistemas
+    h1 Wellcome
+    p PersonalSoft testing spa for Vue.js
 </template>
 
 <script lang="ts">

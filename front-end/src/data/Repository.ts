@@ -22,14 +22,14 @@ export default abstract class Repository<TIEntity> implements IRepository<TIEnti
     return this.name;
   }
 
-  public async get(id: number) {
+  public async get(id: number): Promise<TIEntity> {
     this.service.setEndPoint(this.endPoint());
     const httpResponse: ServiceResponse<TIEntity> = await this.service.get(id);
     const model = httpResponse.data;
     return model;
   }
 
-  public async getAll(parameters: QueryParameters) {
+  public async getAll(parameters: QueryParameters): Promise<QueryResult<TIEntity[]>> {
     this.service.setEndPoint(this.endPoint());
     const httpResponse: ServiceResponse<QueryResult<TIEntity[]>> = await this.service.getAll(
       parameters
@@ -38,7 +38,10 @@ export default abstract class Repository<TIEntity> implements IRepository<TIEnti
     return model;
   }
 
-  public async filter(filterDatas: Array<FilterData>, parameters: QueryParameters) {
+  public async filter(
+    filterDatas: Array<FilterData>,
+    parameters: QueryParameters
+  ): Promise<QueryResult<TIEntity[]>> {
     this.service.setEndPoint(this.endPoint());
     const httpResponse: ServiceResponse<QueryResult<TIEntity[]>> = await this.service.filter(
       filterDatas,
@@ -48,21 +51,21 @@ export default abstract class Repository<TIEntity> implements IRepository<TIEnti
     return model;
   }
 
-  public async post(data: TIEntity) {
+  public async post(data: TIEntity): Promise<TIEntity> {
     this.service.setEndPoint(this.endPoint());
     const httpResponse = await this.service.post(data);
     const model = httpResponse.data;
     return model;
   }
 
-  public async update(id: number, data: TIEntity) {
+  public async update(id: number, data: TIEntity): Promise<boolean> {
     this.service.setEndPoint(this.endPoint());
     const httpResponse = await this.service.put(id, data);
     const model = httpResponse.data;
     return true;
   }
 
-  public async delete(id: number) {
+  public async delete(id: number): Promise<boolean> {
     this.service.setEndPoint(this.endPoint());
     console.log(id);
     const httpResponse = await this.service.delete(id);

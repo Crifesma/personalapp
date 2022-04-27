@@ -1,21 +1,21 @@
 <template lang="pug">
-  v-app(dark)
+  v-app
       v-main
         v-container
           v-row(justify="center" align="center")
             v-col(cols="12" sm="8" md="6")
               v-flex(class='login-form' class='text-center')
-                .display-1.mb-3 #[v-icon.mr-2(large) mdi-login] Ingreso
+                .display-1.mb-3 #[v-icon.mr-2(large) mdi-login] Sign in
                 v-card
                   v-card-text
                     .subheading
-                      | Ingresa con su cuenta de google.
+                      |
                     v-form
-                      v-text-field(v-model='authInput.userName' light prepend-icon='mdi-account' label='Usuario' type='text' dark)
+                      v-text-field(v-model='authInput.userName' light prepend-icon='mdi-account' label='Usuario' type='text')
                       v-text-field(v-model='authInput.password' light
-                      :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'" prepend-icon='mdi-lock' label='Password' :type="show1 ? 'text' : 'password'" @click:append="show1 = !show1" dark)
+                      :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'" prepend-icon='mdi-lock' label='Password' :type="show1 ? 'text' : 'password'" @click:append="show1 = !show1")
                     div
-                      v-btn(@click="login" dark).mr-1 ingresar
+                      v-btn(@click="login").mr-1 Sign in
           v-snackbar(v-model="openMessage" :color="errorMessage?'error':'success'")
             | {{ message }}
 </template>
@@ -42,7 +42,7 @@ export default class Login extends Vue {
     this.errorMessage = false;
     this.message = "";
     try {
-      let response = await this.securityRepository.login(this.authInput);
+      await this.securityRepository.login(this.authInput);
       this.message = "Usuario identificado";
 
       this.$router.push({ name: "home" });
