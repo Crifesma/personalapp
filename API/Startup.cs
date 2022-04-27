@@ -57,7 +57,7 @@ namespace API
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "ArandaAPI", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "PersonalAPI", Version = "v1" });
             });
             services.AddCors();
 

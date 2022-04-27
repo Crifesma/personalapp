@@ -21,7 +21,7 @@ namespace API.Services
         private readonly IFunctionalCharacteristicRepository functionalCharacteristicRepository;
         private readonly IValueEncript valueEncript;
         private readonly IOptions<ApiConfig> apiConfig;
-        public SecurityService(IUserRepository _usersRepository, IFunctionalCharacteristicByRoleRepository _functionalCharacteristicByRoleRepository, IFunctionalCharacteristicRepository _functionalCharacteristicRepository,IValueEncript _valueEncript, IOptions<ApiConfig> _apiConfig)
+        public SecurityService(IUserRepository _usersRepository, IFunctionalCharacteristicByRoleRepository _functionalCharacteristicByRoleRepository, IFunctionalCharacteristicRepository _functionalCharacteristicRepository, IValueEncript _valueEncript, IOptions<ApiConfig> _apiConfig)
         {
             usersRepository = _usersRepository;
             apiConfig = _apiConfig;
@@ -37,8 +37,6 @@ namespace API.Services
 
                 #region Validations
 
-
-
                 if (user == null)
                 {
                     return new UnauthorizedObjectResult(new ResultError() { Type = "No autorizado", Message = "Usuario / Clave incorrectos" });
@@ -52,20 +50,18 @@ namespace API.Services
                 #endregion
 
                 #region TokenCreation
-
                 string permissions = await GetPermissionsKey(user.RoleId);
                 // authentication successful so generate jwt token
                 var tokenHandler = new JwtSecurityTokenHandler();
                 var key = Encoding.ASCII.GetBytes(apiConfig.Value.Secret);
                 var claims = new List<Claim>
                                 {
-                                        new Claim(ClaimTypes.Name, user.UserName),
-                                        new Claim(ClaimTypes.Email,user.Email),
-                                        new Claim("userId",user.Id.ToString()),
-                                        new Claim("permissions",permissions),
-                                        new Claim("fullName",user.FullName)
+                                    new Claim(ClaimTypes.Name, user.UserName),
+                                    new Claim(ClaimTypes.Email,user.Email),
+                                    new Claim("userId",user.Id.ToString()),
+                                    new Claim("permissions",permissions),
+                                    new Claim("fullName",user.FullName)
                                 };
-
 
                 claims.Add(new Claim(ClaimTypes.Role, user.Role.Name));
                 claims.Add(new Claim("assignedRolesId", user.Role.Id.ToString()));
@@ -112,7 +108,6 @@ namespace API.Services
             }
 
             return permissionsInfo;
-
         }
 
         public async Task<string> GetPermissionsKey(int roleId)

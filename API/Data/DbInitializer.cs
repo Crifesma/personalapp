@@ -20,10 +20,10 @@ namespace API.Data
 
             Role[] Roles = new Role[]
             {
-                new Role{Id=1,Name="Administrador"},
+                new Role{Id=1,Name="Administrator"},
                 new Role{Id=2,Name="Editor"},
-                new Role{Id=3,Name="Asistente"},
-                new Role{Id=4,Name="Visitante"},
+                new Role{Id=3,Name="Assistant"},
+                new Role{Id=4,Name="Visitor"},
             };
 
             foreach (Role m in Roles)
@@ -35,7 +35,7 @@ namespace API.Data
 
             User[] users = new User[]
             {
-                new User{UserName="admon",Password="a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3",FullName="Administrador del Sistema",Age=99,Address="Company",Phone="55555",Email="admin@company.com",RoleId=1},
+                new User{UserName="admon",Password="a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3",FullName="Administrator of System",Age=99,Address="Company",Phone="55555",Email="admin@company.com",RoleId=1},
             };
 
             foreach (User a in users)
@@ -47,11 +47,11 @@ namespace API.Data
 
             FunctionalCharacteristic[] functionalCharacteristics = new FunctionalCharacteristic[]
             {
-                new FunctionalCharacteristic{Id=1,Name="Crear usuario"},
-                new FunctionalCharacteristic{Id=2,Name="Eliminar usuario"},
-                new FunctionalCharacteristic{Id=3,Name="Editar usuario"},
-                new FunctionalCharacteristic{Id=4,Name="Listar usuarios"},
-                new FunctionalCharacteristic{Id=5,Name="filtrar usuario"},
+                new FunctionalCharacteristic{Id=1,Name="Create user"},
+                new FunctionalCharacteristic{Id=2,Name="Delete user"},
+                new FunctionalCharacteristic{Id=3,Name="Update user"},
+                new FunctionalCharacteristic{Id=4,Name="List users"},
+                new FunctionalCharacteristic{Id=5,Name="Filter users"},
             };
 
             foreach (FunctionalCharacteristic f in functionalCharacteristics)

@@ -14,7 +14,7 @@ namespace UnitTest
         public void ConfigureServices(IServiceCollection services)
         {
 
-            ApiConfig apiConfig = new ApiConfig() { ExpirationHoursCredentials = 8, Secret = ";7J!J6X:Ag^<.}KpqU[@736nBb7}d}|P_-q]Vb+E<oCWj6UD{7t9#Hm}*ZJ3&ls" };
+            ApiConfig apiConfig = new ApiConfig() { ExpirationMinutesCredentials = 8, Secret = ";7J!J6X:Ag^<.}KpqU[@736nBb7}d}|P_-q]Vb+E<oCWj6UD{7t9#Hm}*ZJ3&ls" };
             services.AddSingleton<ApiConfig>(apiConfig);
             //generaci�n y valdiacion de tokens
             ApiConfig appSettings = apiConfig;
